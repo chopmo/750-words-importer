@@ -1,4 +1,4 @@
-(ns journal-importer.main
+(ns journal-importer
   (:require [java-time :as jt]
             [clojure.string :as str]
             [clojure.java.shell :refer [sh]]
@@ -68,7 +68,8 @@
 
 (defn delete-all-output-files
   []
-  (doseq [f (filter #(.isFile %) (file-seq (io/file "output")))]
+  (doseq [f (filter #(and (.isFile %) (not= ".gitkeep" (.getName %)))
+                    (file-seq (io/file "output")))]
     (io/delete-file f)))
 
 (defn convert-all
@@ -83,9 +84,7 @@
                "with content size"
                (count (:entry e))
                "\n")
-        (encrypt-file (write-entry e))
-        ;(write-entry e)
-      ))))
+        (encrypt-file (write-entry e))))))
 
 (defn main
   [opts]
