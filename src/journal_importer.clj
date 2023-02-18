@@ -38,7 +38,7 @@
 (defn read-contents
   [f]
   (if (broken-encoding? f)
-    (:out (sh "iconv" "-f" "UTF-8" "-t" "ISO-8859-1" (str f)))
+    (:out (sh "iconv" "-c" "-f" "UTF-8" "-t" "ISO-8859-1" (str f)))
     (slurp f)))
 
 (defn convert-new-entry
