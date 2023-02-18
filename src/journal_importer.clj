@@ -28,7 +28,8 @@
 
 (defn input-files
   []
-  (filter #(.isFile %) (file-seq (io/file "input"))))
+  (filter #(and (.isFile %) (not= ".gitkeep" (.getName %)))
+          (file-seq (io/file "input"))))
 
 (defn broken-encoding?
   [f]
