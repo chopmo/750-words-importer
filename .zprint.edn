@@ -1,0 +1,30 @@
+{:style       [:community :justified :map-nl :pair-nl :binding-nl :respect-bl]
+ :width       80
+ :fn-force-nl #{:arg1-body :binding :fn}
+ :map         {:comma?    false
+               :sort?     true
+               :force-nl? false
+               :justify   {:max-variance 40}}
+ :pair        {:force-nl? true :justify {:max-variance 40}}
+ :binding     {:justify {:max-variance 40} :justify? true}
+ :vector      {:wrap? false}
+ :fn-map      {;; clojure.core and special forms
+               "def"           :arg2
+               "do"            :flow-body
+               "try"           :flow-body
+               "finally"       :flow-body
+
+               ;; core.async
+               "async/alt!"    :pair-fn
+               "async/go"      :flow-body
+               "async/go-loop" :binding
+
+               ;; Plumbing
+               "fnk"           "fn"
+               "defnk"         "defn"
+
+               ;; GoMore
+               "plait"         "let"
+
+               ;; HoneySQL
+               "q/select"      [:arg1-body {:list {:constant-pair? false}}]}}
