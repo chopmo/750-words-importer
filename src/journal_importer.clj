@@ -7,7 +7,11 @@
 
 (def entry-marker "------ ENTRY ------")
 
+(def gpg-recipient "jacob@tjoernholm.dk")
+
 (def broken-encoding-marker "Ã¦")
+
+(def encrypt? true)
 
 (defn parse-entry
   [lines]
@@ -63,7 +67,7 @@
 
 (defn encrypt-file
   [filename]
-  (sh "gpg" "-e" "-r" "jacob@tjoernholm.dk" filename)
+  (sh "gpg" "-e" "-r" gpg-recipient filename)
   (io/delete-file filename))
 
 (defn delete-all-output-files
@@ -84,7 +88,9 @@
                "with content size"
                (count (:entry e))
                "\n")
-        (encrypt-file (write-entry e))))))
+        (if encrypt?
+          (encrypt-file (write-entry e))
+          (write-entry e))))))
 
 (defn main
   [opts]
