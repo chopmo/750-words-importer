@@ -49,7 +49,6 @@
       (str/replace "=== BODY ===" "")
       (str/replace " ===" "")))
 
-(convert-new-entry (slurp "input/750words_export_2023_01"))
 (defn write-entry
   [e]
   (let [filename            (str "output/"
